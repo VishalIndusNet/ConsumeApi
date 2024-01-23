@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ConsumingDataApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ConsumingDataApplication.class, args);
+		 SpringApplication.run(ConsumingDataApplication.class, args);
 	}
 
 }
