@@ -18,7 +18,7 @@ public class WebClientController {
         private final WebClientServiceLayer webClientService;
 
         @GetMapping("/all")
-        public ResponseEntity<Flux<WebClientUser>> consumeApi() {
+        public ResponseEntity<List<WebClientUser>> consumeApi() {
             return ResponseEntity.ok( webClientService.consumeApi());
         }
 
@@ -28,7 +28,7 @@ public class WebClientController {
         }
 
         @GetMapping("/post/{id}")
-        public ResponseEntity<List<WebClientUser>> getDataById(@PathVariable int id) {
+        public ResponseEntity<WebClientUser> getDataById(@PathVariable int id) {
             return ResponseEntity.ok(webClientService.getDataById(id));
         }
 
@@ -37,9 +37,9 @@ public class WebClientController {
             return ResponseEntity.ok(webClientService.getUserByComplete(completed));
         }
 
-//        @GetMapping("/webclient/users/{userId}/{id}")
-//        public Flux<WebClientUser> getDataByUserIdAndId(@PathVariable int userId, @PathVariable int id) {
-//            return webClientService.getDataByUserIdAndId(userId, id);
-//        }
+        @GetMapping("/users/{userId}/{id}")
+        public ResponseEntity<List<WebClientUser>> getDataByUserIdAndId(@PathVariable int userId, @PathVariable int id) {
+            return ResponseEntity.ok(webClientService.getDataByUserIdAndId(userId, id));
+        }
 
 }

@@ -4,7 +4,6 @@ import com.fetchData.consumingData.entities.WebClientUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -15,13 +14,13 @@ public class WebClientServiceLayer {
     private  final WebClient webClient;
     private  String apiUrl = "https://jsonplaceholder.typicode.com/todos/";
 
-    public Flux<WebClientUser> consumeApi() {
+    public List<WebClientUser> consumeApi() {
         return webClient.get()
                 .uri(apiUrl)
                 .retrieve()
-                .bodyToFlux(WebClientUser.class);
-//                .collectList()
-//                .block();
+                .bodyToFlux(WebClientUser.class)
+                .collectList()
+                .block();
     }
 
 
@@ -36,15 +35,23 @@ public class WebClientServiceLayer {
     }
 
 
-    public List<WebClientUser> getDataById(int id){
-        String Url = apiUrl + "?id=" +id;
+    public WebClientUser getDataById(int id){
+        String Url = apiUrl + "/" +id;
+        return webClient.get()
+                .uri(Url)
+                .retrieve()
+                .bodyToMono(WebClientUser.class)
+                .block();
+    }
+
+    public List<WebClientUser> getDataByUserIdAndId(int userId, int id) {
+        String  Url= apiUrl+"?userId=" +userId + "&id=" +id;
         return webClient.get()
                 .uri(Url)
                 .retrieve()
                 .bodyToMono(List.class)
                 .block();
     }
-
 
     public List<WebClientUser> getUserByComplete(Boolean completed) {
         String  Url= apiUrl+"?completed="+completed;
@@ -57,15 +64,7 @@ public class WebClientServiceLayer {
     }
 
 
-//    public Flux<RestTemplateUser> getDataByUserIdAndId(int userId, int id) {
-//        return webClient.get()
-//                .uri(uriBuilder -> uriBuilder
-//                        .path("/{userId}")
-//                        .queryParam("id", id)
-//                        .build(userId))
-//                .retrieve()
-//                .bodyToFlux(RestTemplateUser.class);
-//    }
+
 
 
 }

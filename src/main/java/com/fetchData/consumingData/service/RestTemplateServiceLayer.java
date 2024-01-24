@@ -40,15 +40,15 @@ public class RestTemplateServiceLayer {
 //        String apiUrl = url + "?userId=" + userId + "&id=" + id;
 //        return restTemplate.getForObject(apiUrl, User.class);
 //    }
-//    public List<RestTemplateUser> getDataByUserIdAndId(int userId, int id) {
-//        String apiUrl = url + userId + "?id=" + id;
-//        return restTemplate.getForObject(apiUrl, List.class);
-//    }
     public List<RestTemplateUser> getDataByUserIdAndId(int userId, int id) {
-        String apiUrl = UriComponentsBuilder.fromUriString(url + "/{userId}")
-                .queryParam("id", id)
-                .buildAndExpand(userId)
-                .toUriString();
+        String apiUrl = url + "?userId=" + userId + "&id=" + id;
         return restTemplate.getForObject(apiUrl, List.class);
     }
-}
+//    public List<RestTemplateUser> getDataByUserIdAndId(int userId, int id) {
+//        String apiUrl = UriComponentsBuilder.fromUriString(url + "/{userId}")
+//                .queryParam("id", id)
+//                .buildAndExpand(userId)
+//                .toUriString();
+//        return restTemplate.getForObject(apiUrl, List.class);
+    }
+
